@@ -6,7 +6,7 @@
 /*   By: rcollas <rcollas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/09/30 18:08:36 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/01 11:17:19 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 typedef struct s_var{
 	char	**env;
+	t_list	*list;
 }		t_var;
 
 typedef struct s_builtin{

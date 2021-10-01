@@ -6,7 +6,7 @@
 /*   By: rcollas <rcollas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/09/30 18:47:30 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/01 11:17:57 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,23 +80,18 @@ void	init_builtin(t_builtin *builtin)
 	builtin[7].cmd = NULL;
 	builtin[7].func = NULL;
 }
+
 int	is_builtin(char *line, t_builtin *builtin)
 {
 	int	i;
 
 	i = 0;
-	(void)line;
 	while (builtin[i].cmd)
 	{
-		printf("builtin = %s\n", builtin[i].cmd);
-		/*
 		if (ft_strcmp(line, builtin[i].cmd) == 1)
 		{
-			printf("cmd = %s\n", builtin[i].cmd);
-			printf("i = %d\n", i);
 			return (i);
 		}
-		*/
 		i++;
 	}
 	return (0);
@@ -107,13 +102,12 @@ int	main(void)
 	char	*line;
 	int	ret;
 	int	i;
-	t_builtin builtin[1];
+	t_builtin *builtin;
 	
+	builtin = malloc(sizeof(t_builtin) * 8);
 	init_builtin(builtin);
 	i = -1;
 	ret = 0;
-	while (builtin[++i].cmd)
-		printf("%s\n", builtin[i].cmd);
 	while (1)
 	{
 		line = readline("minishell $> ");
