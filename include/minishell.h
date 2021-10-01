@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 11:47:22 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/01 17:12:51 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,26 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_echo{
+	struct s_list	*echo_list;
+	char	*echo;
+	int		simple_quote;
+	int		double_double;
+	int		dash_n;
+	int		dollar;
+} t_echo;
+
 typedef struct s_var{
 	char	**env;
-	t_list	*list;
+	char	*cmd;
+	int	ac;
+	struct s_list	*list;
 	t_echo	*echo;
 }		t_var;
 
 typedef struct s_builtin{
 	char	*cmd;
-	int	(*func)(t_var);
+	int	(*func)(t_var *);
 }		t_builtin;
-
-typedef struct s_echo{
-	t_list	*list_echo;
-	char	*echo;
-	int		simple_quote;
-	int		double_double;
-	int		dash_n;
-} t_echo;
 
 #endif
