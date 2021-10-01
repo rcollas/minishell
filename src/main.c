@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcollas <rcollas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 11:17:57 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/01 11:46:38 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 void	init_builtin(t_builtin *builtin)
 {
+	builtin[i].func(var)
 	builtin[0].cmd = "echo";
 	builtin[0].func = ft_echo;
 	builtin[1].cmd = "cd";
