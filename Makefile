@@ -1,6 +1,7 @@
 NAME		=	minishell
 
 SRC_FILES	=	src/main.c \
+				src/ft_echo.c \
 
 LIBFT_PATH	=	libft/
 
