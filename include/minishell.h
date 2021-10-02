@@ -6,13 +6,17 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 17:12:51 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/02 14:35:01 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 
 # define MINISHELL_H
+# define TRUE 1
+# define FALSE 0
+# define SUCCESS 1
+# define FAIL 0
 
 # include "../libft/libft.h"
 # include <stdio.h>

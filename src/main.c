@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 18:54:54 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/02 15:18:56 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_var_name(char **env, int i)
 {
-	int	j;
+	int		j;
 	char	*name;
 
 	j = 0;
@@ -29,9 +29,9 @@ char	*get_var_name(char **env, int i)
 
 char	*get_var_content(char **env, int i)
 {
-	int	var_len;
-	int	j;
-	int	k;
+	int		var_len;
+	int		j;
+	int		k;
 	char	*content;
 
 	j = 0;
@@ -48,96 +48,161 @@ char	*get_var_content(char **env, int i)
 
 void	get_env_var(t_var *var, t_envar **envar)
 {
-	int	i;
-	t_envar *tmp;
-	
+	int		i;
+	t_envar	*tmp;
+
 	i = -1;
 	while (var->env[++i])
 	{
-		tmp = ft_envar_new(get_var_name(var->env, i), get_var_content(var->env, i));
+		tmp = ft_envar_new(get_var_name(var->env, i),
+				get_var_content(var->env, i));
 		ft_envaradd_back(envar, tmp);
 	}
 }
 
-char	*trim_echo(t_var *var)
+int	is_between_double_quotes(t_var *var, int i)
 {
-	int	s_quote;
-	int	d_quote;
-	int	i;
-	char	*str;
 	int	j;
+	int	check;
 
-	str = (char *)malloc(sizeof(char) * (ft_strlen(var->cmd) + 1));
-	s_quote = 0;
-	d_quote = 0;
+	j = i;
+	check = 0;
+	while (i >= 0)
+	{
+		if (var->cmd[i--] == '"')
+		{
+			check++;
+			break ;
+		}
+	}
+	while (var->cmd[j++])
+	{
+		if (var->cmd[j] == '"')
+		{
+			check++;
+			break ;
+		}
+	}
+	return (check == 2);
+}
+
+int	is_between_simple_quotes(t_var *var, int i)
+{
+	int	j;
+	int	check;
+
+	j = i;
+	check = 0;
+	while (i >= 0)
+	{
+		if (var->cmd[i--] == '\'')
+		{
+			check++;
+			break ;
+		}
+	}
+	while (var->cmd[j++])
+	{
+		if (var->cmd[j] == '\'')
+		{
+			check++;
+			break ;
+		}
+	}
+	return (check == 2);
+}
+
+int	check_unmatched_quotes(t_var *var)
+{
+	int	i;
+	int	d_quote_count;
+	int	s_quote_count;
+
+	i = -1;
+	d_quote_count = 0;
+	s_quote_count = 0;
+	while (var->cmd[++i])
+	{
+		if (var->cmd[i] == '"' && is_between_simple_quotes(var, i) == FALSE)
+			d_quote_count++;
+		if (var->cmd[i] == '\'' && is_between_double_quotes(var, i) == FALSE)
+			s_quote_count++;
+	}
+	return (d_quote_count % 2 + s_quote_count % 2);
+}
+
+int	print_simple_quotes(t_var *var, int i)
+{
+	while (var->cmd[i] != '\'')
+		write (1, &var->cmd[i++], 1);
+	return (++i);
+}
+
+int	print_double_quotes(t_var *var, int i)
+{
+	while (var->cmd[i] != '"')
+		write (1, &var->cmd[i++], 1);
+	return (++i);
+}
+
+int	print_echo(t_var *var)
+{
+	int	i;
+
 	i = 0;
-	j = 0;
+	if (check_unmatched_quotes(var) >= TRUE)
+		return (write(2, "Unmatched quote\n", 16));
 	while (var->cmd[i])
 	{
 		if (var->cmd[i] == '\'')
 		{
-			i++;
-			s_quote = 1;
-			while (var->cmd[i])
-			{
-				if (var->cmd[i] == '\'')
-				{
-					s_quote = 0;
-					i++;
-					break ;
-				}
-				str[j] = var->cmd[i];
-				i++;
-				j++;
-			}
+			i = print_simple_quotes(var, ++i);
+			continue ;
 		}
-		if (s_quote == 1 && var->cmd[i == 0])
-			return ("Unmatched single quote\n");
-		if (var->cmd[i] && var->cmd[i] != '\'')
+		if (var->cmd[i] == '"')
 		{
-			str[j] = var->cmd[i];
-			j++;
-			i++;
+			i = print_double_quotes(var, ++i);
+			continue ;
 		}
+		write (1, &var->cmd[i++], 1);
 	}
-	str[j] = '\n';
-	str[j + 1] = 0;
-	return (str);
+	write (1, "\n", 1);
+	return (1);
 }
 
 int	ft_echo(t_var *var)
 {
 	var->cmd = &(var->cmd[5]);
-	printf("%s", trim_echo(var));
+	print_echo(var);
 	return (0);
 }
 
-int	ft_cd()
+int	ft_cd(t_var *var)
 {
 	return (0);
 }
 
-int	ft_pwd()
+int	ft_pwd(t_var *var)
 {
 	return (0);
 }
 
-int	ft_export()
+int	ft_export(t_var *var)
 {
 	return (0);
 }
 
-int	ft_unset()
+int	ft_unset(t_var *var)
 {
 	return (0);
 }
 
-int	ft_env()
+int	ft_env(t_var *var)
 {
 	return (0);
 }
 
-int	ft_exit()
+int	ft_exit(t_var *var)
 {
 	return (0);
 }
@@ -199,7 +264,7 @@ int	main(int ac, char **av, char **env)
 	t_builtin	*builtin;
 	t_var		var[1];
 	t_envar		*envar;
-	
+
 	builtin = malloc(sizeof(t_builtin) * 8);
 	init_builtin(builtin);
 	i = -1;
@@ -207,7 +272,6 @@ int	main(int ac, char **av, char **env)
 	var->env = env;
 	var->ac = ac;
 	(void)av;
-	//envar = ft_envar_new("", "");
 	envar = NULL;
 	get_env_var(var, &envar);
 	while (1)
