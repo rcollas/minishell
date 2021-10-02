@@ -6,7 +6,7 @@
 /*   By: rcollas <rcollas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 15:25:10 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:26:05 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/02 15:29:35 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_var_name(char **env, int i)
 	while (env[i][j] != '=')
 		j++;
 	name = (char *)malloc(sizeof(char) * (j + 1));
-	name[j] = 0;
+	name[j] = '\0';
 	while (--j >= 0)
 		name[j] = env[i][j];
 	return (name);

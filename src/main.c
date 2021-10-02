@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:26:40 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/02 15:53:22 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,37 @@
 
 int	ft_cd(t_var *var)
 {
+	(void)var;
 	return (0);
 }
 
 int	ft_pwd(t_var *var)
 {
+	(void)var;
 	return (0);
 }
 
 int	ft_export(t_var *var)
 {
+	(void)var;
 	return (0);
 }
 
 int	ft_unset(t_var *var)
 {
+	(void)var;
 	return (0);
 }
 
 int	ft_env(t_var *var)
 {
+	(void)var;
 	return (0);
 }
 
 int	ft_exit(t_var *var)
 {
+	(void)var;
 	return (0);
 }
 
@@ -109,6 +115,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	envar = NULL;
 	get_env_var(var, &envar);
+	var->envar = envar;
 	while (1)
 	{
 		var->cmd = readline("minishell $> ");
