@@ -6,11 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 11:33:52 by vbachele          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/04 18:46:28 by rcollas          ###   ########.fr       */
-=======
-/*   Updated: 2021/10/04 14:00:13 by vbachele         ###   ########.fr       */
->>>>>>> 9d5e9d8e7bdc8d43a71ac5abdd5ffaee9de6d351
+/*   Updated: 2021/10/04 23:44:26 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +90,15 @@ int	print_double_quotes(t_var *var, int i)
 
 	j = i;
 	k = 0;
-	while (var->cmd[j] != '"')
+	while (var->cmd[j] != '"' && var->cmd[j])
 	{
-		if (var->cmd[j] == '$')
+		while (var->cmd[j] == '$')
 		{
+			i = expand_envar(var, ++j);
 			while (is_alnum(var->cmd[j++]) == TRUE)
 				k++;
+			if (var->cmd[j - 1] == '$')
+				j--;
 		}
 		j++;
 	}
@@ -136,20 +135,43 @@ int	print_basic(t_var *var, int i)
 	return (i);
 }
 
+int	is_dash_n(t_var *var)
+{
+	int	i;
+
+	i = 0;
+	if (!var->list)
+		return (0);
+	if (var->list->content[i] == '-')
+	{
+		i++;
+		while (var->list->content[i] == 'n')
+		{
+			if (var->list->content[i + 1] == '\0' || var->list->content[i + 1] == ' ')
+			{
+				return (1);
+			}
+			i++;
+		}
+	}
+	return (0);
+}
+
 int	print_echo(t_var *var)
 {
 	int	i;
 	int	k;
+	int	j;
 
 	i = 0;
 	k = 0;
+	j = 0;
 	if (check_unmatched_quotes(var) >= TRUE)
 		return (write(2, "Unmatched quote\n", 16));
 	while (var->cmd[i])
 	{
 		if (var->cmd[i] == ' ')
 		{
-			printf("space\n");
 			while (var->cmd[i] == ' ')
 				i++;
 		}
@@ -168,19 +190,32 @@ int	print_echo(t_var *var)
 		else
 			i = print_basic(var, i);
 	}
-	while (var->list)
-	{
-		printf("%s", var->list->content);
-		var->list = var->list->next;
-	}
 	return (1);
 }
 
 int	ft_echo(t_var *var)
 {
+	int	print_n;
+	int	i;
+
 	var->cmd = &(var->cmd[5]);
 	print_echo(var);
-	printf("\n");
+	print_n = is_dash_n(var);
+	i = 0;
+	while (is_dash_n(var) == TRUE)
+		var->list = var->list->next;
+	while (var->list)
+	{
+		printf("%s", var->list->content);
+		if (var->list->next && var->list->content[0] != 0 && var->list->next->content[0] != 0)
+		{
+			printf(" ");
+		}
+		var->list = var->list->next;
+		i++;
+	}
+	if (print_n == FALSE)
+		printf("\n");
 	return (0);
 }
 
