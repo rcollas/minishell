@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:53:22 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/04 14:04:54 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 void	init_builtin(t_builtin *builtin)
 {
-	builtin[0].cmd = "echo";
-	builtin[0].func = ft_echo;
+	// builtin[0].cmd = "echo";
+	// builtin[0].func = ft_echo;
 	builtin[1].cmd = "cd";
 	builtin[1].func = ft_cd;
 	builtin[2].cmd = "pwd";
@@ -82,7 +82,7 @@ void	init_builtin(t_builtin *builtin)
 	builtin[7].func = NULL;
 }
 
-int	is_builtin(char *line, t_builtin *builtin)
+int	ecis_builtin(char *line, t_builtin *builtin)
 {
 	int	i;
 

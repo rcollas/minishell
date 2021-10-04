@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 16:43:47 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/04 11:36:56 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:15:25 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 int Errors_chdir_handling(int dir)
 {
-	if (dir <0)
+	if (dir < 0)
 		perror("cd failed");
 	exit(1);
 }
