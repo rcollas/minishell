@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/04 12:14:02 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/04 14:11:16 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,22 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef struct s_var{
+	char			**env;
+	char			*cmd;
+	int				ac;
+	struct s_list	*list;
+	struct s_envar	*envar;
+	struct s_echo	*echo;
+} t_var;
+
+typedef struct s_builtin{
+	char	*cmd;
+	int	(*func)(t_var *);
+}		t_builtin;
+
 typedef struct s_echo{
-	struct s_list	*echo_list;
+	struct	s_list	*echo_list;
 	char	*echo;
 	int		simple_quote;
 	int		double_double;
@@ -35,33 +49,16 @@ typedef struct s_echo{
 	int		dollar;
 } t_echo;
 
-typedef struct s_var{
-	char	**env;
-	char	*cmd;
-	int	ac;
-	struct s_list	*list;
-	struct s_envar *envar;
-	t_echo	*echo;
-}		t_var;
+typedef struct s_cd{
+	struct	s_list	*cd_list;
+	char			*string_cd;
+} t_cd;
 
-typedef struct s_builtin{
-	char	*cmd;
-	int		(*func)(t_var);
-}		t_builtin;
-
-typedef struct s_echo{
-	t_list	*list_echo;
-	char	*echo;
-	int		simple_quote;
-	int		double_quote;
-	int		dash_n;
-	int		dollar;
-}	t_echo;
-
-int	ft_echo(t_var *var);
-int	ft_echo_without_quotes(t_var *var);
-int	ft_echo_dollar(t_var *var);
-int	ft_echo_simple_quote(t_var *var);
-int	ft_strcmp(const char *s1, const char *s2);
+int		is_between_double_quotes(t_var *var, int i);
+int		is_between_simple_quotes(t_var *var, int i);
+int		check_unmatched_quotes(t_var *var);
+int		ft_echo(t_var *var);
+int		ft_strcmp(const char *s1, const char *s2);
+void	get_env_var(t_var *var, struct s_envar **envar);
 
 #endif
