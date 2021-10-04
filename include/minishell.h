@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:54:14 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/04 12:14:02 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,22 @@ typedef struct s_var{
 
 typedef struct s_builtin{
 	char	*cmd;
-	int	(*func)(t_var *);
+	int		(*func)(t_var);
 }		t_builtin;
 
-int	is_between_double_quotes(t_var *var, int i);
-int	is_between_simple_quotes(t_var *var, int i);
-int	check_unmatched_quotes(t_var *var);
+typedef struct s_echo{
+	t_list	*list_echo;
+	char	*echo;
+	int		simple_quote;
+	int		double_quote;
+	int		dash_n;
+	int		dollar;
+}	t_echo;
+
 int	ft_echo(t_var *var);
+int	ft_echo_without_quotes(t_var *var);
+int	ft_echo_dollar(t_var *var);
+int	ft_echo_simple_quote(t_var *var);
 int	ft_strcmp(const char *s1, const char *s2);
-void	get_env_var(t_var *var, struct s_envar **envar);
 
 #endif
