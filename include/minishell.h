@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/04 15:11:46 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/04 18:54:27 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <readline/history.h>
 
 typedef struct s_echo{
-	struct s_list	*echo_list;
+	struct	s_list	*echo_list;
 	char	*echo;
 	int		simple_quote;
 	int		double_double;
@@ -50,11 +50,16 @@ typedef struct s_builtin{
 	int	(*func)(t_var *);
 }		t_builtin;
 
-int	is_between_double_quotes(t_var *var, int i);
-int	is_between_simple_quotes(t_var *var, int i);
-int	check_unmatched_quotes(t_var *var);
-int	ft_echo(t_var *var);
-int	ft_strcmp(const char *s1, const char *s2);
+typedef struct s_cd{
+	struct	s_list	*cd_list;
+	char			*string_cd;
+} t_cd;
+
+int		is_between_double_quotes(t_var *var, int i);
+int		is_between_simple_quotes(t_var *var, int i);
+int		check_unmatched_quotes(t_var *var);
+int		ft_echo(t_var *var);
+int		ft_strcmp(const char *s1, const char *s2);
 void	get_env_var(t_var *var, struct s_envar **envar);
 
 #endif
