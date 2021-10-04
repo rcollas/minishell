@@ -1,6 +1,7 @@
 NAME		=	minishell
 
-SRC_FILES	=
+SRC_FILES	=	src/main.c \
+				src/ft_echo.c \
 				src/ft_echo_utils.c \
 				src/get_envar.c \
 

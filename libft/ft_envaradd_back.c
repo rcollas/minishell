@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_envaradd_back.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/24 16:49:27 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 12:13:11 by rcollas          ###   ########.fr       */
+/*   Created: 2021/05/24 16:48:31 by rcollas           #+#    #+#             */
+/*   Updated: 2021/10/01 15:03:32 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-t_list	*ft_lstnew(char *content)
+void	ft_envaradd_back(t_envar **alst, t_envar *new)
 {
-	t_list	*new_list;
+	t_envar	*last;
 
-	new_list = (t_list *)malloc(sizeof(*new_list));
-	if (!new_list)
-		return (NULL);
-	new_list->content = content;
-	new_list->next = NULL;
-	return (new_list);
+	if (!alst || !new)
+		return ;
+	if (*alst)
+	{
+		last = ft_envarlast(*alst);
+		last->next = new;
+	}
+	else
+		*alst = new;
 }

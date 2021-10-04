@@ -41,6 +41,9 @@ SRCS		= ft_memset.c\
 			  ft_lstclear.c\
 			  ft_lstiter.c\
 			  ft_lstmap.c\
+			  ft_envar_new.c\
+			  ft_envaradd_back.c\
+			  ft_envarlast.c\
 
 OBJS		= $(SRCS:.c=.o)
 
