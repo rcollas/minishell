@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 11:33:52 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/02 17:18:19 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/04 18:46:28 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	expand_envar(t_var *var, int i)
 			i++;
 		return (i);
 	}
-	write (1, get_valid_envar(var, i), ft_strlen(get_valid_envar(var, i)));
+	ft_lstadd_back(&var->list, ft_lstnew(get_valid_envar(var, i)));
 	while (is_alnum(var->cmd[i]) && var->cmd[i])
 		i++;
 	return (i);
@@ -67,52 +67,108 @@ int	expand_envar(t_var *var, int i)
 
 int	print_simple_quotes(t_var *var, int i)
 {
+	int	j;
+	
+	char	*str;
+	j = i;
+	while (var->cmd[j] != '\'')
+		j++;
+	str = (char *)malloc(sizeof(char) * j);
+	j = 0;
 	while (var->cmd[i] != '\'')
-		write (1, &var->cmd[i++], 1);
+		str[j++] = var->cmd[i++];
+	str[j] = '\0';
+	ft_lstadd_back(&var->list, ft_lstnew(str));
 	return (++i);
 }
 
 int	print_double_quotes(t_var *var, int i)
 {
+	int	j;
+	int	k;
+	char	*str;
+
+	j = i;
+	k = 0;
+	while (var->cmd[j] != '"')
+	{
+		if (var->cmd[j] == '$')
+		{
+			while (is_alnum(var->cmd[j++]) == TRUE)
+				k++;
+		}
+		j++;
+	}
+	str = (char *)malloc(sizeof(char) * (j - k));
+	j = 0;
 	while (var->cmd[i] != '"')
 	{
 		if (var->cmd[i] == '$')
-		{
-			i = expand_envar(var, ++i);
-			continue ;
-		}
-		write (1, &var->cmd[i++], 1);
+			i += k;
+		str[j++] = var->cmd[i++];
 	}
+	str[j] = '\0';
+	ft_lstadd_back(&var->list, ft_lstnew(str));
 	return (++i);
+}
+
+int	print_basic(t_var *var, int i)
+{
+	int	k;
+	int	j;
+	int	len;
+	char	*str;
+
+	j = 0;
+	k = i;
+	while (var->cmd[i] != '\'' && var->cmd[i] != '"' && var->cmd[i] != '$' && var->cmd[i] && var->cmd[i] != ' ')
+		i++;
+	len = i - k;
+	str = (char *)malloc(sizeof(char) * len);
+	while (j < len)
+		str[j++] = var->cmd[k++];
+	str[j] = '\0';
+	ft_lstadd_back(&var->list, ft_lstnew(str));
+	return (i);
 }
 
 int	print_echo(t_var *var)
 {
 	int	i;
+	int	k;
 
 	i = 0;
+	k = 0;
 	if (check_unmatched_quotes(var) >= TRUE)
 		return (write(2, "Unmatched quote\n", 16));
 	while (var->cmd[i])
 	{
-		if (var->cmd[i] == '\'')
+		if (var->cmd[i] == ' ')
+		{
+			printf("space\n");
+			while (var->cmd[i] == ' ')
+				i++;
+		}
+		else if (var->cmd[i] == '\'')
 		{
 			i = print_simple_quotes(var, ++i);
-			continue ;
 		}
-		if (var->cmd[i] == '"')
+		else if (var->cmd[i] == '"')
 		{
 			i = print_double_quotes(var, ++i);
-			continue ;
 		}
-		if (var->cmd[i] == '$')
+		else if (var->cmd[i] == '$')
 		{
 			i = expand_envar(var, ++i);
-			continue ;
 		}
-		write (1, &var->cmd[i++], 1);
+		else
+			i = print_basic(var, i);
 	}
-	write (1, "\n", 1);
+	while (var->list)
+	{
+		printf("%s", var->list->content);
+		var->list = var->list->next;
+	}
 	return (1);
 }
 
@@ -120,5 +176,6 @@ int	ft_echo(t_var *var)
 {
 	var->cmd = &(var->cmd[5]);
 	print_echo(var);
+	printf("\n");
 	return (0);
 }

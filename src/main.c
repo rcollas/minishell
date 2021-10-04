@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:53:22 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/04 14:58:28 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ int	main(int ac, char **av, char **env)
 	ret = 0;
 	var->env = env;
 	var->ac = ac;
+	var->variable = NULL;
+	var->list = NULL;
 	(void)av;
 	envar = NULL;
 	get_env_var(var, &envar);
