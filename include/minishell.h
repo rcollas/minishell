@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 16:46:07 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/05 12:04:34 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ int	ft_echo_without_quotes(t_var *var);
 int	ft_echo_dollar(t_var *var);
 int	ft_echo_simple_quote(t_var *var);
 int	ft_strcmp(const char *s1, const char *s2);
+int	change_pwd_env(t_var *var);
 
 #endif
