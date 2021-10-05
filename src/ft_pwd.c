@@ -6,12 +6,11 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 11:39:06 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/04 15:16:02 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/05 14:34:15 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include "../include/minishell.h"
+#include "minishell.h"
 
 int	ft_pwd(char **argv)
 {
