@@ -6,7 +6,7 @@
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:29:41 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/05 17:27:14 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/05 19:05:21 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ int	charcmp(char c1, char c2)
 	if (c1 != c2)
 		return (0);
 	return (1);
+}
+
+int		is_valid_dollar(t_var *var, int i)
+{
+	if (var->cmd[i] == '$')
+	{
+		if (ft_isalnum(var->cmd[i + 1]))
+			return (1);
+	}
+	return (0);
 }
 
 char	*get_valid_envar(t_var *var, int i)
@@ -60,20 +70,28 @@ int	expand_envar(t_var *var, int i)
 		{
 			while (ft_isalnum(var->cmd[j]) && var->cmd[j])
 				j++;
+			while (var->cmd[j] != ' ' && var->cmd[j] != '"' && is_valid_dollar(var, j - 1) == FALSE)
+			{
+				j++;
+				k++;
+			}
 		}
 		else
 		{
-			k = ft_strlen(get_valid_envar(var, j));
-			printf("k = %d\n", k);
+			k += ft_strlen(get_valid_envar(var, j));
 			while (ft_isalnum(var->cmd[j]) && var->cmd[j])
 				j++;
+			while (var->cmd[j] && var->cmd[j] != '"' && var->cmd[j] != ' ' && is_valid_dollar(var, j) == FALSE)
+			{
+				j++;
+				k++;
+			}
 		}
 		if (var->cmd[j] == '$')
 			j++;
 		else if (var->cmd[j] != '$')
 			dollar = 0;
-	}
-	printf("var = %s\n", &var->cmd[i]);
+		}
 	dollar = 1;
 	str = (char *)malloc(sizeof(char) * (k + 1));
 	j = 0;
@@ -84,6 +102,8 @@ int	expand_envar(t_var *var, int i)
 		{
 			while (ft_isalnum(var->cmd[i]) && var->cmd[i])
 				i++;
+			while (var->cmd[j] && var->cmd[j] != '"' && var->cmd[j] != ' ' && is_valid_dollar(var, j - 1) == FALSE)
+				str[j++] = var->cmd[++i - 2];;
 		}
 		else
 		{
@@ -91,15 +111,22 @@ int	expand_envar(t_var *var, int i)
 				str[j++] = get_valid_envar(var, i)[k++];
 			while (ft_isalnum(var->cmd[i]) && var->cmd[i])
 				i++;
+			while (var->cmd[i] && var->cmd[i] != '"' && var->cmd[i] != ' ' && is_valid_dollar(var, i) == FALSE)
+			{
+				printf("var cmd = %c\n", var->cmd[i]);
+				str[j++] = var->cmd[++i - 1];
+				//if (var->cmd[i] == '$')
+				//	j--;
+			}
 		}
 		if (var->cmd[i] == '$')
 			i++;
 		else if (var->cmd[i] != '$')
 			dollar = 0;
+		printf("var after i++ = %c\n", var->cmd[i]);
 	}
 	str[j] = 0;
 	ft_lstadd_back(&var->list, ft_lstnew(str));
-	printf("var cmd %c\n", var->cmd[i]);
 	return (i);
 }
 
@@ -138,13 +165,11 @@ int	print_double_quotes(t_var *var, int i)
 	k = 0;
 	while (var->cmd[j] != '"' && var->cmd[j])
 	{
-		while (var->cmd[j] == '$')
+		if (var->cmd[j] == '$')
 		{
 			i = expand_envar(var, ++j);
-			while (ft_isalnum(var->cmd[j++]) == TRUE)
+			while (ft_isalnum(var->cmd[1 + j++]) == TRUE)
 				k++;
-			if (var->cmd[j - 1] == '$')
-				j--;
 		}
 		j++;
 		while (var->cmd[j] == '"' && var->cmd[j + 1] == '"')
@@ -163,16 +188,6 @@ int	print_double_quotes(t_var *var, int i)
 	str[j] = '\0';
 	ft_lstadd_back(&var->list, ft_lstnew(str));
 	return (++i);
-}
-
-int		is_valid_dollar(t_var *var, int i)
-{
-	if (var->cmd[i] == '$')
-	{
-		if (ft_isalnum(var->cmd[i + 1]))
-			return (1);
-	}
-	return (0);
 }
 
 int	print_basic(t_var *var, int i)
@@ -260,7 +275,6 @@ int	ft_echo(t_var *var)
 		var->list = var->list->next;
 	while (var->list)
 	{
-		//printf("list %d = %s|\n", i, var->list->content);
 		printf("%s", var->list->content);
 		if (var->list->next && var->list->content[0] != 0 && var->list->next->content[0] != 0)
 		{
