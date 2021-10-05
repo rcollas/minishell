@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 11:33:52 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/04 23:44:26 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/05 13:53:11 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int	ft_echo(t_var *var)
 		var->list = var->list->next;
 	while (var->list)
 	{
-		printf("%s", var->list->content);
+		printf("list %d = %s\n", i, var->list->content);
 		if (var->list->next && var->list->content[0] != 0 && var->list->next->content[0] != 0)
 		{
 			printf(" ");

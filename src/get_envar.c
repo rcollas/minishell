@@ -6,7 +6,7 @@
 /*   By: rcollas <rcollas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 15:25:10 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:29:35 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/05 13:53:13 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	get_env_var(t_var *var, t_envar **envar)
 	t_envar	*tmp;
 
 	i = -1;
+	(void)envar;
 	while (var->env[++i])
 	{
 		tmp = ft_envar_new(get_var_name(var->env, i),

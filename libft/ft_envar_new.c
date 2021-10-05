@@ -6,7 +6,7 @@
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:49:27 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 14:14:25 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/05 13:53:14 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_envar	*ft_envar_new(char *name, char *content)
 {
 	t_envar	*new_list;
 
-	new_list = (t_envar *)malloc(sizeof(t_envar *));
+	new_list = (t_envar *)malloc(sizeof(t_envar));
 	if (!new_list)
 		return (NULL);
 	new_list->name = name;
