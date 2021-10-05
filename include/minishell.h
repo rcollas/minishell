@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/05 10:52:16 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/05 11:16:11 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_var{
 	struct s_envar	*envar;
 	struct s_echo	*echo;
 	struct s_pwd	*pwd;
+	struct s_exit	*exit;
 } t_var;
 
 typedef struct s_builtin{
@@ -68,6 +69,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	get_env_var(t_var *var, struct s_envar **envar);
 int		ft_pwd(char **argv);
 int		ft_env(char **envp, char **argv);
-int		ft_unset(t_var *var)
+int		ft_unset(t_var *var);
+int		ft_exit(t_var *var, char *line);
 
 #endif
