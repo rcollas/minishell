@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/06 10:11:38 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:26:03 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	get_env_var(t_var *var, struct s_envar **envar);
 int		ft_pwd(t_var *var);
 int		ft_cd(t_var *var);
+int		print_echo(t_var *var);
+void	free_list(t_var *var); // a virer
 
 #endif

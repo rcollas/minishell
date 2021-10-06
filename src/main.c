@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/06 10:09:03 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/06 17:26:16 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	main(int ac, char **av, char **env)
 		ret = is_builtin(var->cmd, builtin);
 		if (ret >= 0)
 			builtin[ret].func(var);
+		free_list(var);
 	}
 	return (0);
 }
