@@ -6,6 +6,7 @@ SRC_FILES	=	src/main.c \
 			src/get_envar.c \
 			src/ft_env.c \
 			src/ft_pwd.c \
+			src/ft_cd.c \
 
 LIBFT_PATH	=	libft/
 
