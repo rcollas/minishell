@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:53:53 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 16:34:42 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/06 02:04:08 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef	struct s_envar{
-	char	*name;
-	char	*content;
+typedef struct s_envar{
+	char			*name;
+	char			*content;
 	struct s_envar	*next;
 }		t_envar;
 
