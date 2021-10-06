@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/06 01:55:25 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/06 14:18:05 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,19 @@ int	is_builtin(char *line, t_builtin *builtin)
 	return (-1);
 }
 
+void	free_list(t_var *var)
+{
+	t_list	*tmp;
+
+	while (var->list)
+	{
+		tmp = var->list->next;
+		free(var->list->content);
+		free(var->list);
+		var->list = tmp;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	int			ret;
@@ -118,6 +131,7 @@ int	main(int ac, char **av, char **env)
 		ret = is_builtin(var->cmd, builtin);
 		if (ret >= 0)
 			builtin[ret].func(var);
+		free_list(var);
 	}
 	return (0);
 }
