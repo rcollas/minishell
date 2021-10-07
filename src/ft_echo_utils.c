@@ -6,13 +6,13 @@
 /*   By: rcollas <rcollas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 15:21:33 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:22:08 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/07 19:53:53 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_between_double_quotes(t_var *var, int i)
+int	is_between_double_quotes(char *str, int i)
 {
 	int	j;
 	int	check;
@@ -21,15 +21,15 @@ int	is_between_double_quotes(t_var *var, int i)
 	check = 0;
 	while (i >= 0)
 	{
-		if (var->cmd[i--] == '"')
+		if (str[i--] == '"')
 		{
 			check++;
 			break ;
 		}
 	}
-	while (var->cmd[j++])
+	while (str[j++])
 	{
-		if (var->cmd[j] == '"')
+		if (str[j] == '"')
 		{
 			check++;
 			break ;
@@ -38,7 +38,7 @@ int	is_between_double_quotes(t_var *var, int i)
 	return (check == 2);
 }
 
-int	is_between_simple_quotes(t_var *var, int i)
+int	is_between_simple_quotes(char *str, int i)
 {
 	int	j;
 	int	check;
@@ -47,15 +47,15 @@ int	is_between_simple_quotes(t_var *var, int i)
 	check = 0;
 	while (i >= 0)
 	{
-		if (var->cmd[i--] == '\'')
+		if (str[i--] == '\'')
 		{
 			check++;
 			break ;
 		}
 	}
-	while (var->cmd[j++])
+	while (str[j++])
 	{
-		if (var->cmd[j] == '\'')
+		if (str[j] == '\'')
 		{
 			check++;
 			break ;
@@ -75,9 +75,9 @@ int	check_unmatched_quotes(t_var *var)
 	s_quote_count = 0;
 	while (var->cmd[++i])
 	{
-		if (var->cmd[i] == '"' && is_between_simple_quotes(var, i) == FALSE)
+		if (var->cmd[i] == '"' && is_between_simple_quotes(var->cmd, i) == FALSE)
 			d_quote_count++;
-		if (var->cmd[i] == '\'' && is_between_double_quotes(var, i) == FALSE)
+		if (var->cmd[i] == '\'' && is_between_double_quotes(var->cmd, i) == FALSE)
 			s_quote_count++;
 	}
 	return (d_quote_count % 2 + s_quote_count % 2);

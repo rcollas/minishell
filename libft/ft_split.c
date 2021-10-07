@@ -6,7 +6,7 @@
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:51:17 by rcollas           #+#    #+#             */
-/*   Updated: 2021/05/25 19:10:04 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/07 18:41:05 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,18 @@ static unsigned int	ft_ult_strlen(char const *str, char charset)
 
 	i = 0;
 	while (str[i] && !is_charset(str[i], charset))
+	{
+		if (str[i] == '"')
+		{
+			i++;
+			while (str[i] != '"')
+				i++;
+		}
+		if (str[i] == '\'')
+			while (str[i] != '\'')
+				i++;
 		i++;
+	}
 	return (i);
 }
 
@@ -45,8 +56,21 @@ static unsigned int	ft_count_words(char const *str, char charset)
 			words_count++;
 			is_word = 0;
 		}
+		if (*str == '"')
+		{
+			str++;
+			while (*str != '"')
+				str++;
+		}
+		if (*str == '\'')
+		{
+			str++;
+			while (*str != '\'')
+				str++;
+		}
 		str++;
 	}
+	printf("words count = %d\n", words_count);
 	return (words_count);
 }
 
@@ -83,7 +107,21 @@ char	**ft_split(char const *s, char c)
 			return (ft_free(tab, i));
 		j = 0;
 		while (*s && !is_charset(*s, c))
+		{
+			if (*s == '"')
+			{
+				tab[i][j++] = *s++;
+				while (*s != '"')
+					tab[i][j++] = *s++;
+			}
+			if (*s == '\'')
+			{
+				tab[i][j++] = *s++;
+				while (*s != '\'')
+					tab[i][j++] = *s++;
+			}
 			tab[i][j++] = *s++;
+		}
 		tab[i][j] = 0;
 	}
 	tab[i] = 0;

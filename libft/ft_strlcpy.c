@@ -6,16 +6,16 @@
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:52:13 by rcollas           #+#    #+#             */
-/*   Updated: 2021/05/24 16:52:14 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/07 18:57:09 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+int	ft_strlcpy(char *dest, const char *src, int size)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (!dest || !src)

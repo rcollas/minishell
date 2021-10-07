@@ -6,7 +6,7 @@
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:29:41 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/05 19:05:21 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/07 20:02:24 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	charcmp(char c1, char c2)
 	return (1);
 }
 
-int		is_valid_dollar(t_var *var, int i)
+int	is_valid_dollar(t_var *var, int i)
 {
 	if (var->cmd[i] == '$')
 	{
@@ -51,9 +51,171 @@ char	*get_valid_envar(t_var *var, int i)
 		}
 		tmp = tmp->next;
 	}
+	return ("");
+}
+
+int	expand_envar(char *str, int i)
+{
+	if (get_valid_envar(var, i) == FAIL)
+	{
+		while (ft_isalnum(var->cmd[i]) && var->cmd[i])
+			i++;
+		return (i);
+	}
+	write (1, get_valid_envar(var, i), ft_strlen(get_valid_envar(var, i)));
+	while (ft_isalnum(var->cmd[i]) && var->cmd[i])
+		i++;
+	return (i);
+}
+
+int	get_string_len(char *str, t_var *var)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	while (str[++i])
+	{
+		if (str[i] == '$' && is_between_simple_quotes(str, i) == FALSE)
+		{
+			j += ft_strlen(get_valid_envar(var, ++i));
+			while (ft_isalnum(str[i]) == TRUE)
+				i++;
+			i--;
+			continue ;
+		}
+		if (str[i] == '"' && is_between_simple_quotes(str, i) == FALSE)
+		{
+			continue ;
+		}
+		if (str[i] == '\'' && is_between_double_quotes(str, i) == FALSE)
+		{
+			continue ;
+		}
+		j++;
+	}
+	return (j);
+}
+
+char	*ft_trim(char *str, int len)
+{
+	char	*trim_str;
+	int	i;
+	int	j;
+
+	trim_str = (char *)malloc(sizeof(char) * (len + 1));
+	j = 0;
+	i = 0;
+	while (i < len)
+	{
+		if (str[j] == '"' && is_between_simple_quotes(str, i) == FALSE)
+		{
+			j++;
+			continue ;
+		}
+		if (str[j] == '\'' && is_between_double_quotes(str, i) == FALSE)
+		{
+			j++;
+			continue ;
+		}
+		if (str[j] == '$'
+		trim_str[i++] = str[j++];
+	}
+	trim_str[i] = 0;
+	return (trim_str);
+}
+
+int	get_arguments(char **split_cmd, t_var *var)
+{
+	int	i;
+	char	*content;
+
+	i = -1;
+	while (split_cmd[++i])
+	{
+		content = ft_trim(split_cmd[i], get_string_len(split_cmd[i], var));
+		ft_lstadd_back(&var->list, ft_lstnew(content));
+	}
+	return (1);
+}
+
+int	ft_echo(t_var *var)
+{
+	int	i;
+	char	**test;
+
+	var->cmd = &(var->cmd[5]);
+	test = ft_split(var->cmd, ' ');
+	i = -1;
+	while (test[++i])
+	{
+		printf("%s  ", test[i]);
+		printf("len = %d\n", get_string_len(test[i], var));
+	}
+	get_arguments(test, var);
+	while (var->list)
+	{
+		printf("%s ", var->list->content);
+		var->list = var->list->next;
+	}
+	//printf("len = %d", get_string_len(test[0], var));
+	/*
+	while (var->list)
+	{
+		printf("%s", var->list->content);
+		if (var->list->next && var->list->content[0] != 0 && var->list->next->content[0] != 0)
+		{
+			printf(" ");
+		}
+		var->list = var->list->next;
+		i++;
+	}
+	*/
+	printf("\n");
 	return (0);
 }
 
+// int	ft_echo_without_quotes(t_var *var)
+// {	
+// 	var->echo->echo = ft_strtrim(var->echo->echo, 32);
+// 	if (var->echo->dollar == 0 && var->echo->dash_n == 1)
+// 		ft_putendl_fd(var->echo->echo, 1);
+// 	else if (var->echo->dash_n == 1 && var->echo->dollar == 0)
+// 		ft_putstr_fd(var->echo->echo, 1);
+// 	else if (var->echo->dollar == 1)
+// 		ft_echo_dollar(var);
+// 	return (0);
+// }
+
+// int	ft_echo_simple_quote(t_var *var)
+// {
+// 	if (var->echo->dollar == 1)
+// 		write(1, "$", 1);
+// 	ft_putstr_fd(var->echo->echo, 1);
+// 	if (var->echo->dash_n == 0)
+// 		write(1, "\n", 1);
+// 	return (0);
+// }
+
+// int	ft_echo_double_quote(t_var *var)
+// {
+// 	if (var->echo->dollar == 0)
+// 		ft_putendl_fd(var->echo->echo, 1);
+// 	else if (var->echo->dash_n == 1 && var->echo->dollar == 0)
+// 		ft_putstr_fd(var->echo->echo, 1);
+// 	else if (var->echo->dollar == 1)
+// 		ft_echo_dollar(var);
+// }
+
+// int	ft_echo_dollar(t_var *var)
+// {
+// 	ft_putstr_fd(var->echo->echo, 1);
+// 	if (var->echo->dash_n == 0)
+// 		write(1, "\n", 1);
+// 	return (0);
+// }
+/*
 int	expand_envar(t_var *var, int i)
 {
 	char	*str;
@@ -261,69 +423,6 @@ int	print_echo(t_var *var)
 	}
 	return (1);
 }
+*/
 
-int	ft_echo(t_var *var)
-{
-	int	print_n;
-	int	i;
 
-	var->cmd = &(var->cmd[5]);
-	print_echo(var);
-	print_n = is_dash_n(var);
-	i = 0;
-	while (is_dash_n(var) == TRUE)
-		var->list = var->list->next;
-	while (var->list)
-	{
-		printf("%s", var->list->content);
-		if (var->list->next && var->list->content[0] != 0 && var->list->next->content[0] != 0)
-		{
-			printf(" ");
-		}
-		var->list = var->list->next;
-		i++;
-	}
-	if (print_n == FALSE)
-		printf("\n");
-	return (0);
-}
-
-// int	ft_echo_without_quotes(t_var *var)
-// {	
-// 	var->echo->echo = ft_strtrim(var->echo->echo, 32);
-// 	if (var->echo->dollar == 0 && var->echo->dash_n == 1)
-// 		ft_putendl_fd(var->echo->echo, 1);
-// 	else if (var->echo->dash_n == 1 && var->echo->dollar == 0)
-// 		ft_putstr_fd(var->echo->echo, 1);
-// 	else if (var->echo->dollar == 1)
-// 		ft_echo_dollar(var);
-// 	return (0);
-// }
-
-// int	ft_echo_simple_quote(t_var *var)
-// {
-// 	if (var->echo->dollar == 1)
-// 		write(1, "$", 1);
-// 	ft_putstr_fd(var->echo->echo, 1);
-// 	if (var->echo->dash_n == 0)
-// 		write(1, "\n", 1);
-// 	return (0);
-// }
-
-// int	ft_echo_double_quote(t_var *var)
-// {
-// 	if (var->echo->dollar == 0)
-// 		ft_putendl_fd(var->echo->echo, 1);
-// 	else if (var->echo->dash_n == 1 && var->echo->dollar == 0)
-// 		ft_putstr_fd(var->echo->echo, 1);
-// 	else if (var->echo->dollar == 1)
-// 		ft_echo_dollar(var);
-// }
-
-// int	ft_echo_dollar(t_var *var)
-// {
-// 	ft_putstr_fd(var->echo->echo, 1);
-// 	if (var->echo->dash_n == 0)
-// 		write(1, "\n", 1);
-// 	return (0);
-// }
