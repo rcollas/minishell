@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:53:53 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/01 16:34:42 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/08 11:45:55 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef	struct s_envar{
-	char	*name;
-	char	*content;
+typedef struct s_envar{
+	char			*name;
+	char			*content;
 	struct s_envar	*next;
 }		t_envar;
 
@@ -75,5 +75,7 @@ char		*ft_strtrim(const char *s1, const char *set);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
+int			ft_envar_position(t_envar *envar, char *str);
+char		*ft_envar_find_content(t_envar *tmp, char *str);
 
 #endif

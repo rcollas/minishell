@@ -6,25 +6,25 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 16:43:47 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/07 11:34:58 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/08 11:48:58 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int Errors_chdir_handling(int dir)
+int	errors_chdir_handling(int dir)
 {
 	if (dir < 0)
-		perror("cd failed"); 
+		perror("cd failed");
 	// rajouter la fonction qui free
 	return (0);
 }
 
 void	free_list(t_var *var) // fonction a virer au parsing
 {
-	t_list *tmp;
-	
-	while(var->list)
+	t_list	*tmp;
+
+	while (var->list)
 	{
 		tmp = var->list->next;
 		free(var->list->content);
@@ -33,50 +33,67 @@ void	free_list(t_var *var) // fonction a virer au parsing
 	}
 }
 
-int ft_cd(t_var *var)
+int	ft_cd(t_var *var)
 {
-	int 	dir;
-	t_list 	*tmp;
+	int		dir;
+	t_list	*tmp;
 	t_envar	*tmp2;
-	t_envar	*tmp3;
-	t_envar	*tmp4;
 	char	*str;
-	
-	var->cmd = &(var->cmd[3]);
+
+	str = NULL;
+	tmp2 = var->envar;
+	var->cmd = &(var->cmd[3]); // a recuperer plus proprement
 	print_echo(var);
 	tmp = var->list;
 	tmp2 = var->envar;
-	dir = chdir(tmp->content);
-	tmp3 = var->envar;
-	tmp4 = var->envar;
-	// if (tmp->content == 0)
+	// if (var->cmd[3] == 0) // a modifier avec les bonnes valeurs
 	// {
-	// 	dir = chdir("~");
+	// 	str = ft_envar_find_content(tmp2, "HOME");
+	// 	dir = chdir(str);
+	// 	str = ft_envar_swap_1(var, "PWD");
 	// 	printf("%s\n", getcwd(0, 150));
-	// 	return(0);
+	// 	return (0);
 	// }
-	printf("%s\n", getcwd(0, 150));
-	while(tmp3)
-	{
-		if(ft_strcmp(tmp3->name, "OLDPWD"))
-		{
-			str = tmp3->content;
-			break;
-		}
-		tmp3 = tmp3->next;
-	}
-	while(tmp4)
-	{
-		if (ft_strcmp(tmp4->name, "PWD"))
-		{
-			break;
-		}
-		tmp4 = tmp4->next;
-	}
-	tmp4->content = tmp3->content;
-	tmp3->content = str;
+	dir = chdir(var->list->content);
+	str = ft_envar_swap_1(var, "PWD");
+	ft_envar_swap_2(var, "OLDPWD", str);
 	if (dir < 0)
-		Errors_chdir_handling(dir);
-	// printf("%s\n", getcwd(0, 150));
+		errors_chdir_handling(dir);
 	return (0);
+}
+
+char	*ft_envar_swap_1(t_var *var, char *str)
+{
+	char	*str2;
+	t_envar	*tmp;
+
+	tmp = var->envar;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, str))
+		{
+			str = tmp->content;
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	str2 = getcwd(0, 150);
+	tmp->content = str2;
+	return (str);
+}
+
+void	ft_envar_swap_2(t_var *var, char *str, char *str2)
+{
+	t_envar	*tmp;
+
+	tmp = var->envar;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, str))
+		{
+			tmp->content = str2;
+			break ;
+		}
+		tmp = tmp->next;
+	}
 }
