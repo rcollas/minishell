@@ -6,7 +6,7 @@
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:29:41 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/07 20:02:24 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/08 14:20:01 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ int	is_valid_dollar(t_var *var, int i)
 	return (0);
 }
 
-char	*get_valid_envar(t_var *var, int i)
+char	*get_valid_envar(t_var *var, char *str, int i)
 {
 	t_envar	*tmp;
 	int	j;
 	int	k;
 
 	tmp = var->envar;
+	(void)str;
 	while (tmp)
 	{
 		j = 0;
@@ -54,16 +55,18 @@ char	*get_valid_envar(t_var *var, int i)
 	return ("");
 }
 
-int	expand_envar(char *str, int i)
+int	expand_envar(t_var *var, char *str, int i)
 {
-	if (get_valid_envar(var, i) == FAIL)
+	int	len;
+
+	len = ft_strlen(get_valid_envar(var, str, i));
+	if (get_valid_envar(var, str, i) == FAIL)
 	{
-		while (ft_isalnum(var->cmd[i]) && var->cmd[i])
+		while (ft_isalnum(str[i]) && str[i])
 			i++;
 		return (i);
 	}
-	write (1, get_valid_envar(var, i), ft_strlen(get_valid_envar(var, i)));
-	while (ft_isalnum(var->cmd[i]) && var->cmd[i])
+	while (ft_isalnum(str[i]) && str[i])
 		i++;
 	return (i);
 }
@@ -79,7 +82,7 @@ int	get_string_len(char *str, t_var *var)
 	{
 		if (str[i] == '$' && is_between_simple_quotes(str, i) == FALSE)
 		{
-			j += ft_strlen(get_valid_envar(var, ++i));
+			j += ft_strlen(get_valid_envar(var, str, ++i));
 			while (ft_isalnum(str[i]) == TRUE)
 				i++;
 			i--;
@@ -98,28 +101,38 @@ int	get_string_len(char *str, t_var *var)
 	return (j);
 }
 
-char	*ft_trim(char *str, int len)
+char	*ft_trim(t_var *var, char *str, int len)
 {
 	char	*trim_str;
 	int	i;
 	int	j;
+	int	k;
 
 	trim_str = (char *)malloc(sizeof(char) * (len + 1));
 	j = 0;
 	i = 0;
 	while (i < len)
 	{
-		if (str[j] == '"' && is_between_simple_quotes(str, i) == FALSE)
+		k = 0;
+		if (str[j] == '"' && is_between_simple_quotes(str, j) == FALSE)
 		{
 			j++;
 			continue ;
 		}
-		if (str[j] == '\'' && is_between_double_quotes(str, i) == FALSE)
+		if (str[j] == '\'' && is_between_double_quotes(str, j) == FALSE)
 		{
 			j++;
 			continue ;
 		}
-		if (str[j] == '$'
+		if (str[j] == '$' && is_between_simple_quotes(str, j) == FALSE)
+		{
+			j++;
+			while (get_valid_envar(var, str, j)[k])
+				trim_str[i++] = get_valid_envar(var, str, j)[k++];
+			while (ft_isalnum(str[j]) == TRUE)
+				j++;
+			continue ;
+		}
 		trim_str[i++] = str[j++];
 	}
 	trim_str[i] = 0;
@@ -134,7 +147,7 @@ int	get_arguments(char **split_cmd, t_var *var)
 	i = -1;
 	while (split_cmd[++i])
 	{
-		content = ft_trim(split_cmd[i], get_string_len(split_cmd[i], var));
+		content = ft_trim(var, split_cmd[i], get_string_len(split_cmd[i], var));
 		ft_lstadd_back(&var->list, ft_lstnew(content));
 	}
 	return (1);
@@ -144,31 +157,76 @@ int	ft_echo(t_var *var)
 {
 	int	i;
 	char	**test;
+	t_list	*start;
 
 	var->cmd = &(var->cmd[5]);
 	test = ft_split(var->cmd, ' ');
 	i = -1;
-	while (test[++i])
-	{
-		printf("%s  ", test[i]);
-		printf("len = %d\n", get_string_len(test[i], var));
-	}
 	get_arguments(test, var);
-	while (var->list)
+	start = var->list;
+	while (start)
 	{
-		printf("%s ", var->list->content);
-		var->list = var->list->next;
+		printf("%s ", start->content);
+		start = start->next;
+	}
+	printf("\n");
+	start = var->list;
+	list_insert(&var->list, ft_lstnew("essai 1"), 3);
+	while (start)
+	{
+		printf("%s ", start->content);
+		start = start->next;
+	}
+	printf("\n");
+	start = var->list;
+	list_remove(&var->list, 3);
+	while (start)
+	{
+		printf("%s ", start->content);
+		start = start->next;
+	}
+	printf("\n");
+	start = var->list;
+	list_insert(&var->list, ft_lstnew("essai 2"), 2);
+	while (start)
+	{
+		printf("%s ", start->content);
+		start = start->next;
+	}
+	printf("\n");
+	start = var->list;
+	list_remove(&var->list, 4);
+	while (start)
+	{
+		printf("%s ", start->content);
+		start = start->next;
+	}
+	printf("\n");
+	start = var->list;
+	list_insert(&var->list, ft_lstnew("essai 3"), 4);
+	while (start)
+	{
+		printf("%s ", start->content);
+		start = start->next;
+	}
+	printf("\n");
+	list_remove(&var->list, 1);
+	start = var->list;
+	while (start)
+	{
+		printf("%s ", start->content);
+		start = start->next;
 	}
 	//printf("len = %d", get_string_len(test[0], var));
 	/*
-	while (var->list)
+	while (start)
 	{
-		printf("%s", var->list->content);
-		if (var->list->next && var->list->content[0] != 0 && var->list->next->content[0] != 0)
+		printf("%s", start->content);
+		if (start->next && start->content[0] != 0 && start->next->content[0] != 0)
 		{
 			printf(" ");
 		}
-		var->list = var->list->next;
+		start = start->next;
 		i++;
 	}
 	*/

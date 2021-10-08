@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/06 14:18:05 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/08 14:21:17 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	free_list(t_var *var)
 	while (var->list)
 	{
 		tmp = var->list->next;
-		free(var->list->content);
+		//free(var->list->content);
 		free(var->list);
 		var->list = tmp;
 	}

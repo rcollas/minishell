@@ -6,7 +6,7 @@
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:51:17 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/07 18:41:05 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/08 00:46:09 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@ static unsigned int	ft_ult_strlen(char const *str, char charset)
 				i++;
 		}
 		if (str[i] == '\'')
+		{
+			i++;
 			while (str[i] != '\'')
 				i++;
+		}
 		i++;
 	}
 	return (i);
@@ -70,7 +73,6 @@ static unsigned int	ft_count_words(char const *str, char charset)
 		}
 		str++;
 	}
-	printf("words count = %d\n", words_count);
 	return (words_count);
 }
 
@@ -102,7 +104,7 @@ char	**ft_split(char const *s, char c)
 	{
 		while (*s && is_charset(*s, c))
 			s++;
-		tab[i] = (char *)malloc(sizeof(**tab) * ft_ult_strlen(s, c) + 1);
+		tab[i] = (char *)malloc(sizeof(**tab) * (ft_ult_strlen(s, c) + 1));
 		if (!tab[i])
 			return (ft_free(tab, i));
 		j = 0;
