@@ -4,6 +4,9 @@ SRC_FILES	=	src/main.c \
 				src/ft_echo.c \
 				src/ft_echo_utils.c \
 				src/get_envar.c \
+				ft_envarsize.c \
+			  	list_remove.c \
+				ft_unset.c \
 
 LIBFT_PATH	=	libft/
 
