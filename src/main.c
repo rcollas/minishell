@@ -6,23 +6,23 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/06 17:26:16 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/08 14:47:52 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int	ft_cd(t_var *var)
-// {
-// 	(void)var;
-// 	return (0);
-// }
+int	ft_cd(t_var *var)
+{
+	(void)var;
+	return (0);
+}
 
-// int	ft_pwd(t_var *var)
-// {
-// 	(void)var;
-// 	return (0);
-// }
+int	ft_pwd(t_var *var)
+{
+	(void)var;
+	return (0);
+}
 
 int	ft_export(t_var *var)
 {
@@ -37,6 +37,12 @@ int	ft_unset(t_var *var)
 }
 
 int	ft_exit(t_var *var)
+{
+	(void)var;
+	return (0);
+}
+
+int	ft_env(t_var *var)
 {
 	(void)var;
 	return (0);
@@ -71,7 +77,7 @@ void	init_builtin(t_builtin *builtin)
 	builtin[5].cmd = "env";
 	builtin[5].func = ft_env;
 	builtin[6].cmd = "exit";
-	builtin[6].func = ft_exit;
+	builtin[6].func = ft_exit; 
 	builtin[7].cmd = NULL;
 	builtin[7].func = NULL;
 }
