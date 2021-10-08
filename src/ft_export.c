@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:27:30 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/07 11:17:45 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/08 17:50:42 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,95 @@
 
 int	ft_export(t_var *var)
 {
-	t_envar *new;
+	int 	size;
+	t_envar *tmp;
+	t_envar *tmp2;
+	int		i;
+	int		j;
+	char	*name;
+	char	*content;
+	int 	equal;
 	
-	var->cmd = &(var->cmd[7]); // changer cette maniere de recup l'argument
-	// printf("\n\n\n%s\n\n\n", var->cmd);
-	if (var->cmd == NULL)
-		ft_env(var); // Permet d'afficher env quand aucun 2 eme argument
-	else
+	j = 0;
+	i = 0;
+	equal = 0;
+	tmp = var->envar;
+	tmp2 = var->envar;
+	name = 0;
+	var->cmd = &(var->cmd[7]);
+	if (cmd_not_alpha(var) == - 1)
+		return (-1);
+	name = malloc(sizeof(ft_strlen(var->cmd)));
+	content = malloc(sizeof(ft_strlen(var->cmd)));
+	while (var->cmd[i])
 	{
-		if (var->cmd[0] != '=')
+		if (var->cmd[i] == '=')
 		{
-				new = ft_envar_new("salut", var->cmd);
-				if (!new)
-					return (0);
-				ft_envaradd_back(&var->envar, new); // pourquoi mettre var->list ?
+			equal = 1;
+			break ;
 		}
-		// Ajouter un bloc sur l'avant dernier bloc avec les infos de l'argument apres export
-		// Le = ne doit pas etre le premier caractere
+		name[i] = var->cmd[i];
+		i++;
+	}
+	if (export_reassigned_check(var, name) == -1 || equal == 0)
+		return (- 1);
+	while(var->cmd[i++])
+	{
+		content[j] = var->cmd[i];
+		j++;	
+	}
+	tmp = ft_envar_new(name, content);
+	size = ft_envarsize(tmp2);
+	if (envar_insert(&var->envar, tmp, size) == 1)
+	{
+		// free (content);
+		// free (name);
+		return (0);
+	} 
+	return (0);
+}
+
+int	cmd_not_alpha(t_var *var)
+{
+	if (!ft_isalpha(var->cmd[0]))
+	{
+		ft_putendl_fd("export: not valid in this context", 2);
+		return (-1);
 	}
 	return (0);
 }
+
+int	export_reassigned_check(t_var *var, char *name)
+{
+	t_envar *tmp;
+
+	tmp = var->envar;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, name) == 1)
+			return (- 1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+// int export_find_equal(t_var *var)
+// {
+// 	int	i;
+// 	int	equal;
+
+// 	i = 0;
+// 	equal = 0;
+// 	while (var->cmd[i])
+// 	{
+// 		if (var->cmd[i] == '=')
+// 		{
+// 			equal = 1;
+// 			break ;
+// 		}
+// 		name[i] = var->cmd[i];
+// 		i++;
+// 	}
+// 	if (equal == 0)
+// 		return (- 1);
+// }

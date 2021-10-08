@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:53:53 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/06 02:04:08 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/08 16:21:55 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,9 @@ char		*ft_strtrim(const char *s1, const char *set);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
+int			list_insert(t_list **list, t_list *new, int pos);
+int			ft_envarsize(t_envar *envar);
+int			ft_envar_position(t_envar *envar, char *str);
+int			envar_insert(t_envar**envar, t_envar *new, int pos);
 
 #endif
