@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 13:47:57 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/08 17:08:56 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,12 @@ typedef struct s_builtin{
 // 	char			*string_cd;
 // } t_cd;
 
-int		is_between_double_quotes(char *str, int i);
-int		is_between_simple_quotes(char *str, int i);
 int		check_unmatched_quotes(t_var *var);
 int		ft_echo(t_var *var);
 int		ft_env(t_var *var);
 int		ft_strcmp(const char *s1, const char *s2);
-void	get_env_var(t_var *var, struct s_envar **envar);
+void		get_env_var(t_var *var, struct s_envar **envar);
 int		ft_pwd(t_var *var);
 int		ft_exit(t_var *var);
-int		list_insert(t_list **list, t_list *new, int pos);
-int		list_remove(t_list **list, int pos);
 
 #endif

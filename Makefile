@@ -7,8 +7,6 @@ SRC_FILES	=	src/main.c \
 			src/ft_env.c \
 			src/ft_pwd.c \
 			src/ft_exit.c \
-			src/list_insert.c \
-			src/list_remove.c \
 
 LIBFT_PATH	=	libft/
 

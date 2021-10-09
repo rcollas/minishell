@@ -6,7 +6,7 @@
 /*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 16:29:41 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 14:20:01 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/08 17:34:06 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	charcmp(char c1, char c2)
 	return (1);
 }
 
-int	is_valid_dollar(t_var *var, int i)
+int	is_valid_dollar(char *str, int i)
 {
-	if (var->cmd[i] == '$')
+	if (str[i] == '$')
 	{
-		if (ft_isalnum(var->cmd[i + 1]))
+		if (ft_isalnum(str[i + 1]))
 			return (1);
 	}
 	return (0);
@@ -71,16 +71,36 @@ int	expand_envar(t_var *var, char *str, int i)
 	return (i);
 }
 
+void	check_s_quote(int *s_quote)
+{
+	if (*s_quote == FALSE)
+		*s_quote = TRUE;
+	else
+		*s_quote = FALSE;
+}
+
+void	check_d_quote(int *d_quote)
+{
+	if (*d_quote == FALSE)
+		*d_quote = TRUE;
+	else
+		*d_quote = FALSE;
+}
+
 int	get_string_len(char *str, t_var *var)
 {
 	int	i;
 	int	j;
+	int	d_quote;
+	int	s_quote;
 
+	d_quote = 0;
+	s_quote = 0;
 	i = -1;
 	j = 0;
 	while (str[++i])
 	{
-		if (str[i] == '$' && is_between_simple_quotes(str, i) == FALSE)
+		if (str[i] == '$' && s_quote == FALSE && is_valid_dollar(str, i) == TRUE)
 		{
 			j += ft_strlen(get_valid_envar(var, str, ++i));
 			while (ft_isalnum(str[i]) == TRUE)
@@ -88,12 +108,14 @@ int	get_string_len(char *str, t_var *var)
 			i--;
 			continue ;
 		}
-		if (str[i] == '"' && is_between_simple_quotes(str, i) == FALSE)
+		if (str[i] == '"' && s_quote == FALSE)
 		{
+			check_s_quote(&s_quote);
 			continue ;
 		}
-		if (str[i] == '\'' && is_between_double_quotes(str, i) == FALSE)
+		if (str[i] == '\'' && d_quote == FALSE)
 		{
+			check_d_quote(&d_quote);
 			continue ;
 		}
 		j++;
@@ -107,24 +129,36 @@ char	*ft_trim(t_var *var, char *str, int len)
 	int	i;
 	int	j;
 	int	k;
+	int	s_quote;
+	int	d_quote;
 
 	trim_str = (char *)malloc(sizeof(char) * (len + 1));
 	j = 0;
 	i = 0;
+	s_quote = 0;
+	d_quote = 0;
 	while (i < len)
 	{
 		k = 0;
-		if (str[j] == '"' && is_between_simple_quotes(str, j) == FALSE)
+		if (str[j] == '"' && s_quote == FALSE)
 		{
+			if (d_quote == FALSE)
+				d_quote = TRUE;
+			else
+				d_quote = FALSE;
 			j++;
 			continue ;
 		}
-		if (str[j] == '\'' && is_between_double_quotes(str, j) == FALSE)
+		if (str[j] == '\'' && d_quote == FALSE)
 		{
+			if (s_quote == FALSE)
+				s_quote = TRUE;
+			else
+				s_quote = FALSE;
 			j++;
 			continue ;
 		}
-		if (str[j] == '$' && is_between_simple_quotes(str, j) == FALSE)
+		if (str[j] == '$' && s_quote == FALSE && ft_isalnum(str[j + 1]) == TRUE)
 		{
 			j++;
 			while (get_valid_envar(var, str, j)[k])
@@ -160,274 +194,22 @@ int	ft_echo(t_var *var)
 	t_list	*start;
 
 	var->cmd = &(var->cmd[5]);
+	if (check_unmatched_quotes(var) == TRUE)
+	{
+		printf("Unmatched quotes\n");
+		return (0);
+	}
 	test = ft_split(var->cmd, ' ');
 	i = -1;
 	get_arguments(test, var);
 	start = var->list;
 	while (start)
 	{
-		printf("%s ", start->content);
+		printf("content = %s ", start->content);
 		start = start->next;
 	}
-	printf("\n");
-	start = var->list;
-	list_insert(&var->list, ft_lstnew("essai 1"), 3);
-	while (start)
-	{
-		printf("%s ", start->content);
-		start = start->next;
-	}
-	printf("\n");
-	start = var->list;
-	list_remove(&var->list, 3);
-	while (start)
-	{
-		printf("%s ", start->content);
-		start = start->next;
-	}
-	printf("\n");
-	start = var->list;
-	list_insert(&var->list, ft_lstnew("essai 2"), 2);
-	while (start)
-	{
-		printf("%s ", start->content);
-		start = start->next;
-	}
-	printf("\n");
-	start = var->list;
-	list_remove(&var->list, 4);
-	while (start)
-	{
-		printf("%s ", start->content);
-		start = start->next;
-	}
-	printf("\n");
-	start = var->list;
-	list_insert(&var->list, ft_lstnew("essai 3"), 4);
-	while (start)
-	{
-		printf("%s ", start->content);
-		start = start->next;
-	}
-	printf("\n");
-	list_remove(&var->list, 1);
-	start = var->list;
-	while (start)
-	{
-		printf("%s ", start->content);
-		start = start->next;
-	}
-	//printf("len = %d", get_string_len(test[0], var));
-	/*
-	while (start)
-	{
-		printf("%s", start->content);
-		if (start->next && start->content[0] != 0 && start->next->content[0] != 0)
-		{
-			printf(" ");
-		}
-		start = start->next;
-		i++;
-	}
-	*/
 	printf("\n");
 	return (0);
-}
-
-// int	ft_echo_without_quotes(t_var *var)
-// {	
-// 	var->echo->echo = ft_strtrim(var->echo->echo, 32);
-// 	if (var->echo->dollar == 0 && var->echo->dash_n == 1)
-// 		ft_putendl_fd(var->echo->echo, 1);
-// 	else if (var->echo->dash_n == 1 && var->echo->dollar == 0)
-// 		ft_putstr_fd(var->echo->echo, 1);
-// 	else if (var->echo->dollar == 1)
-// 		ft_echo_dollar(var);
-// 	return (0);
-// }
-
-// int	ft_echo_simple_quote(t_var *var)
-// {
-// 	if (var->echo->dollar == 1)
-// 		write(1, "$", 1);
-// 	ft_putstr_fd(var->echo->echo, 1);
-// 	if (var->echo->dash_n == 0)
-// 		write(1, "\n", 1);
-// 	return (0);
-// }
-
-// int	ft_echo_double_quote(t_var *var)
-// {
-// 	if (var->echo->dollar == 0)
-// 		ft_putendl_fd(var->echo->echo, 1);
-// 	else if (var->echo->dash_n == 1 && var->echo->dollar == 0)
-// 		ft_putstr_fd(var->echo->echo, 1);
-// 	else if (var->echo->dollar == 1)
-// 		ft_echo_dollar(var);
-// }
-
-// int	ft_echo_dollar(t_var *var)
-// {
-// 	ft_putstr_fd(var->echo->echo, 1);
-// 	if (var->echo->dash_n == 0)
-// 		write(1, "\n", 1);
-// 	return (0);
-// }
-/*
-int	expand_envar(t_var *var, int i)
-{
-	char	*str;
-	int			k;
-	int			dollar;
-	int			j;
-
-	k = 0;
-	dollar= 1;
-	j = i;
-	while (dollar == TRUE && var->cmd[j])
-	{
-		if (get_valid_envar(var, j) == FAIL)
-		{
-			while (ft_isalnum(var->cmd[j]) && var->cmd[j])
-				j++;
-			while (var->cmd[j] != ' ' && var->cmd[j] != '"' && is_valid_dollar(var, j - 1) == FALSE)
-			{
-				j++;
-				k++;
-			}
-		}
-		else
-		{
-			k += ft_strlen(get_valid_envar(var, j));
-			while (ft_isalnum(var->cmd[j]) && var->cmd[j])
-				j++;
-			while (var->cmd[j] && var->cmd[j] != '"' && var->cmd[j] != ' ' && is_valid_dollar(var, j) == FALSE)
-			{
-				j++;
-				k++;
-			}
-		}
-		if (var->cmd[j] == '$')
-			j++;
-		else if (var->cmd[j] != '$')
-			dollar = 0;
-		}
-	dollar = 1;
-	str = (char *)malloc(sizeof(char) * (k + 1));
-	j = 0;
-	while (dollar == TRUE && var->cmd[i])
-	{
-		k = 0;
-		if (get_valid_envar(var, i) == FAIL)
-		{
-			while (ft_isalnum(var->cmd[i]) && var->cmd[i])
-				i++;
-			while (var->cmd[j] && var->cmd[j] != '"' && var->cmd[j] != ' ' && is_valid_dollar(var, j - 1) == FALSE)
-				str[j++] = var->cmd[++i - 2];;
-		}
-		else
-		{
-			while (get_valid_envar(var, i)[k])
-				str[j++] = get_valid_envar(var, i)[k++];
-			while (ft_isalnum(var->cmd[i]) && var->cmd[i])
-				i++;
-			while (var->cmd[i] && var->cmd[i] != '"' && var->cmd[i] != ' ' && is_valid_dollar(var, i) == FALSE)
-			{
-				printf("var cmd = %c\n", var->cmd[i]);
-				str[j++] = var->cmd[++i - 1];
-				//if (var->cmd[i] == '$')
-				//	j--;
-			}
-		}
-		if (var->cmd[i] == '$')
-			i++;
-		else if (var->cmd[i] != '$')
-			dollar = 0;
-		printf("var after i++ = %c\n", var->cmd[i]);
-	}
-	str[j] = 0;
-	ft_lstadd_back(&var->list, ft_lstnew(str));
-	return (i);
-}
-
-int	print_simple_quotes(t_var *var, int i)
-{
-	int	j;
-	
-	char	*str;
-	j = i;
-	while (var->cmd[j] != '\'')
-	{
-		j++;
-		while (var->cmd[j] == '\'' && var->cmd[j + 1] == '\'')
-			j += 2;
-	}
-	str = (char *)malloc(sizeof(char) * j);
-	j = 0;
-	while (var->cmd[i] != '\'')
-	{
-		str[j++] = var->cmd[i++];
-		while (var->cmd[i] == '\'' && var->cmd[i + 1] == '\'')
-			i += 2;
-	}
-	str[j] = '\0';
-	ft_lstadd_back(&var->list, ft_lstnew(str));
-	return (++i);
-}
-
-int	print_double_quotes(t_var *var, int i)
-{
-	int	j;
-	int	k;
-	char	*str;
-
-	j = i;
-	k = 0;
-	while (var->cmd[j] != '"' && var->cmd[j])
-	{
-		if (var->cmd[j] == '$')
-		{
-			i = expand_envar(var, ++j);
-			while (ft_isalnum(var->cmd[1 + j++]) == TRUE)
-				k++;
-		}
-		j++;
-		while (var->cmd[j] == '"' && var->cmd[j + 1] == '"')
-			j += 2;
-	}
-	str = (char *)malloc(sizeof(char) * (j - k));
-	j = 0;
-	while (var->cmd[i] != '"')
-	{
-		if (var->cmd[i] == '$')
-			i += k;
-		str[j++] = var->cmd[i++];
-		while (var->cmd[i] == '"' && var->cmd[i + 1] == '"')
-			i += 2;
-	}
-	str[j] = '\0';
-	ft_lstadd_back(&var->list, ft_lstnew(str));
-	return (++i);
-}
-
-int	print_basic(t_var *var, int i)
-{
-	int	k;
-	int	j;
-	int	len;
-	char	*str;
-
-	j = 0;
-	k = i;
-	while (var->cmd[i] != '\'' && var->cmd[i] != '"' && is_valid_dollar(var, i) == FALSE && var->cmd[i] && var->cmd[i] != ' ')
-		i++;
-	len = i - k;
-	str = (char *)malloc(sizeof(char) * len);
-	while (j < len)
-		str[j++] = var->cmd[k++];
-	str[j] = '\0';
-	ft_lstadd_back(&var->list, ft_lstnew(str));
-	return (i);
 }
 
 int	is_dash_n(t_var *var)
@@ -451,36 +233,3 @@ int	is_dash_n(t_var *var)
 	}
 	return (0);
 }
-
-int	print_echo(t_var *var)
-{
-	int	i;
-	int	k;
-	int	j;
-
-	i = 0;
-	k = 0;
-	j = 0;
-	if (check_unmatched_quotes(var) >= TRUE)
-		return (write(2, "Unmatched quote\n", 16));
-	while (var->cmd[i])
-	{
-		if (var->cmd[i] == ' ')
-		{
-			while (var->cmd[i] == ' ')
-				i++;
-		}
-		else if (var->cmd[i] == '\'')
-			i = print_simple_quotes(var, ++i);
-		else if (var->cmd[i] == '"')
-			i = print_double_quotes(var, ++i);
-		else if (var->cmd[i] == '$' && ft_isalnum(var->cmd[i + 1]))
-			i = expand_envar(var, ++i);
-		else
-			i = print_basic(var, i);
-	}
-	return (1);
-}
-*/
-
-
