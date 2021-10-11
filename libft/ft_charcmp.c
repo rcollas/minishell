@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_charcmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/05 10:57:38 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/06 02:04:43 by vbachele         ###   ########.fr       */
+/*   Created: 2021/10/11 14:47:27 by rcollas           #+#    #+#             */
+/*   Updated: 2021/10/11 14:48:12 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h" //remplacer par le vrai path
+#include "libft.h"
 
-int	ft_exit(t_var *var)
+int	ft_charcmp(char c1, char c2)
 {
-	//Rajouter ce qu'on doit free ailleurs
-	(void) var;
-	exit (EXIT_SUCCESS);
-	return (0);
+	if (c1 != c2)
+		return (0);
+	return (1);
 }

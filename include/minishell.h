@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/11 11:33:51 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/11 16:31:13 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,51 +18,18 @@
 # define SUCCESS 1
 # define FAIL 0
 
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <unistd.h>
+# include "parsing.h"
+# include "struct.h"
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
-typedef struct s_echo{
-	struct s_list	*echo_list;
-	char			*echo;
-	int				simple_quote;
-	int				double_double;
-	int				dash_n;
-	int				dollar;
-}	t_echo;
-
-typedef struct s_var{
-	char			**env;
-	char			*cmd;
-	char			*variable;
-	int				ac;
-	int			s_quote;
-	int			d_quote;
-	struct s_list	*list;
-	struct s_envar	*envar;
-	t_echo			*echo;
-}		t_var;
-
-typedef struct s_builtin{
-	char	*cmd;
-	int		(*func)(t_var *);
-}		t_builtin;
-
-// typedef struct s_cd{
-// 	struct	s_list	*cd_list;
-// 	char			*string_cd;
-// } t_cd;
-
-int		check_unmatched_quotes(t_var *var);
 int		ft_echo(t_var *var);
 int		ft_env(t_var *var);
 int		ft_strcmp(const char *s1, const char *s2);
-void		get_env_var(t_var *var, struct s_envar **envar);
 int		ft_pwd(t_var *var);
 int		ft_exit(t_var *var);
+void		free_envar(t_envar *envar);
 
 #endif

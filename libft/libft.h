@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:53:53 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/07 18:59:03 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/11 16:05:38 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,13 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "../include/minishell.h"
+# include "../include/struct.h"
 
 typedef struct s_list
 {
 	char			*content;
 	struct s_list	*next;
 }	t_list;
-
-typedef struct s_envar{
-	char			*name;
-	char			*content;
-	struct s_envar	*next;
-}		t_envar;
 
 int			ft_atoi(const char *str);
 void		ft_bzero(void *s, size_t n);
@@ -37,6 +32,7 @@ int			ft_isalpha(int c);
 int			ft_isascii(int c);
 int			ft_isdigit(int c);
 int			ft_isprint(int c);
+int			ft_charcmp(char c1, char c2);
 char		*ft_itoa(int n);
 void		ft_lstadd_back(t_list **alst, t_list *new);
 void		ft_lstadd_front(t_list **alst, t_list *new);

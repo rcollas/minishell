@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/11 12:14:32 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/11 16:43:23 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,30 @@ void	free_list(t_var *var)
 	}
 }
 
+void	free_split(char **split_str)
+{
+	int	i;
+
+	i = -1;
+	while (split_str[++i])
+		free(split_str[i]);
+	free(split_str);
+}
+
+void	free_envar(t_envar *envar)
+{
+	t_envar	*tmp;
+
+	while (envar)
+	{
+		tmp = envar->next;
+		free(envar->name);
+		free(envar->content);
+		free(envar);
+		envar = tmp;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	int			ret;
@@ -130,9 +154,12 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		var->cmd = readline("minishell $> ");
+		add_history(var->cmd);
+		get_arguments(var);
 		ret = is_builtin(var->cmd, builtin);
 		if (ret >= 0)
 			builtin[ret].func(var);
+		free(var->cmd);
 		free_list(var);
 	}
 	return (0);

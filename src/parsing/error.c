@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo_utils.c                                    :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rcollas <rcollas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: rcollas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/02 15:21:33 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 17:15:17 by rcollas          ###   ########.fr       */
+/*   Created: 2021/10/11 14:53:42 by rcollas           #+#    #+#             */
+/*   Updated: 2021/10/11 14:54:59 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 int	check_unmatched_quotes(t_var *var)
 {
@@ -29,18 +29,12 @@ int	check_unmatched_quotes(t_var *var)
 	{
 		if (var->cmd[i] == '"' && s_quote == FALSE)
 		{
-			if (d_quote == FALSE)
-				d_quote = TRUE;
-			else
-				d_quote = FALSE;
+			check_d_quote(&d_quote);
 			d_quote_count++;
 		}
 		if (var->cmd[i] == '\'' && d_quote == FALSE)
 		{
-			if (s_quote == FALSE)
-				s_quote = TRUE;
-			else
-				s_quote = FALSE;
+			check_s_quote(&s_quote);
 			s_quote_count++;
 		}
 	}

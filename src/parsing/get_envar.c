@@ -6,11 +6,11 @@
 /*   By: rcollas <rcollas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/02 15:25:10 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/02 15:29:35 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/11 14:50:40 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
 
 char	*get_var_name(char **env, int i)
 {

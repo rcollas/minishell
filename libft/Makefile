@@ -44,6 +44,7 @@ SRCS		= ft_memset.c\
 			  ft_envar_new.c\
 			  ft_envaradd_back.c\
 			  ft_envarlast.c\
+			  ft_charcmp.c\
 
 OBJS		= $(SRCS:.c=.o)
 
