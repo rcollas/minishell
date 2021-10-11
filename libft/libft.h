@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:53:53 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 16:21:55 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/11 17:04:03 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,7 @@ int			list_insert(t_list **list, t_list *new, int pos);
 int			ft_envarsize(t_envar *envar);
 int			ft_envar_position(t_envar *envar, char *str);
 int			envar_insert(t_envar**envar, t_envar *new, int pos);
+int			list_remove(t_list **list, int pos);
+int			envar_remove(t_envar **envar, int pos);
 
 #endif

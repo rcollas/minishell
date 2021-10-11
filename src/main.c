@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/07 10:32:01 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/11 17:04:42 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	ft_cd(t_var *var)
 // 	return (0);
 // }
 
-int	ft_unset(t_var *var)
-{
-	(void)var;
-	return (0);
-}
+// int	ft_unset(t_var *var)
+// {
+// 	(void)var;
+// 	return (0);
+// }
 
 // int	ft_exit(t_var *var)
 // {

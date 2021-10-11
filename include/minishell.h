@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 18:03:22 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/11 17:01:14 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int		ft_export(t_var *var);
 int		cmd_not_alpha(t_var *var);
 int		export_reassigned_check(t_var *var, char *name, char *content);
 int		export_insert(t_var *var, char *name, char *content);
+int		ft_unset(t_var *var);
 
 #endif
