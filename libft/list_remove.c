@@ -6,11 +6,11 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 15:15:38 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/08 15:15:38 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/11 14:52:03 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 int	list_remove(t_list **list, int pos)
 {

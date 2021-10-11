@@ -1,12 +1,16 @@
 NAME		=	minishell
 
 SRC_FILES	=	src/main.c \
-				src/ft_echo.c \
-				src/ft_echo_utils.c \
-				src/get_envar.c \
-				ft_envarsize.c \
-			  	list_remove.c \
-				ft_unset.c \
+			src/ft_echo.c \
+			src/ft_echo_utils.c \
+			src/get_envar.c \
+			src/ft_env.c \
+			src/ft_pwd.c \
+			src/ft_exit.c \
+			src/ft_export.c \
+			src/ft_envarsize.c \
+			src/ft_unset.c \
+
 
 LIBFT_PATH	=	libft/
 

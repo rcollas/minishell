@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envarsize.c                                     :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/11 14:52:18 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/11 14:52:18 by vbachele         ###   ########.fr       */
+/*   Created: 2021/10/05 10:57:38 by vbachele          #+#    #+#             */
+/*   Updated: 2021/10/06 02:04:43 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h" //remplacer par le vrai path
 
-int	ft_envarsize(t_envar *envar)
+int	ft_exit(t_var *var)
 {
-	int	i;
-
-	i = 0;
-	while (envar)
-	{
-		envar = envar->next;
-		i++;
-	}
-	return (i);
+	//Rajouter ce qu'on doit free ailleurs
+	(void) var;
+	exit (EXIT_SUCCESS);
+	return (0);
 }

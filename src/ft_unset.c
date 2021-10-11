@@ -6,30 +6,25 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 17:29:54 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/08 15:18:12 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:09:23 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../include/minishell.h"
+#include "minishell.h"
 
-int	ft_unset(t_var *var)
-{
-	t_envar *tmp;
-	int size;
+// int	ft_unset(t_var *var)
+// {
+// 	t_envar *tmp;
 	
-	tmp = var->envar;
-	size = ft_envarsize(tmp);
-	
-	// tmp = get_env_list //remplacer par le vrai nom
-	// while(tmp)
-	// {
-	// 	if(strcmp(tmp->content), argv[2] == 1)
-	// 	{
-	// 		// ft_lstdelone(tmp, del);
-	// 		// On supprime lelement  // 2 manieres pour supprimer de la liste - avec la position ou doublement chainee.
-	// 		break;
-	// 	} // remplacer par la fonction ft_strcmp
-	// 	tmp = tmp->next; 
-	// }
-	return (0);
-}
+// 	tmp = var->envar;
+// 	var->cmd = &(var->cmd[6]);
+// 	while (tmp)
+// 	{
+// 		if (ft_strcmp(tmp->content, var->cmd) == 1)
+// 		{
+// 			printf("POUET");
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	return (0);
+// }
