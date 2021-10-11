@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 17:08:56 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/11 11:33:51 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_var{
 	char			*cmd;
 	char			*variable;
 	int				ac;
+	int			s_quote;
+	int			d_quote;
 	struct s_list	*list;
 	struct s_envar	*envar;
 	t_echo			*echo;

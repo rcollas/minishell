@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 14:21:17 by rcollas          ###   ########.fr       */
+/*   Updated: 2021/10/11 12:14:32 by rcollas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	free_list(t_var *var)
 	while (var->list)
 	{
 		tmp = var->list->next;
-		//free(var->list->content);
+		free(var->list->content);
 		free(var->list);
 		var->list = tmp;
 	}
@@ -121,6 +121,8 @@ int	main(int ac, char **av, char **env)
 	var->ac = ac;
 	var->variable = NULL;
 	var->list = NULL;
+	var->s_quote = 0;
+	var->d_quote = 0;
 	(void)av;
 	envar = NULL;
 	get_env_var(var, &envar);
