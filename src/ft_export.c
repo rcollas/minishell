@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:27:30 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/11 15:25:56 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/12 10:44:27 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	ft_export(t_var *var)
 	equal = 0;
 	name = 0;
 	var->cmd = &(var->cmd[7]);
-	if (cmd_not_alpha(var) == -1)
-		return (-1);
 	name = malloc(sizeof(ft_strlen(var->cmd)));
 	content = malloc(sizeof(ft_strlen(var->cmd)));
 	while (var->cmd[i])
@@ -44,18 +42,29 @@ int	ft_export(t_var *var)
 		content[j] = var->cmd[i];
 		j++;
 	}
+	i
+	if (equal == 0)
+		cmd_export_alone(var, name, equal);
 	if (export_reassigned_check(var, name, content) == -1 || equal == 0)
 		return (-1);
 	export_insert(var, name, content);
 	return (0);
 }
 
-int	cmd_not_alpha(t_var *var)
+int	cmd_export_alone(t_var *var, char *name, int equal)
 {
+	t_envar *tmp;
+	
+	tmp = var->envar;
 	if (!ft_isalpha(var->cmd[0]))
 	{
-		ft_putendl_fd("export: not valid in this context", 2);
-		return (-1);
+		while (tmp)
+		{
+			write(1, "export ", 8);
+			printf("%s=\"%s\"\n", tmp->name, tmp->content);
+			tmp = tmp->next;
+		}
+		//Ajouter liste chainee export ici. VOIR AVEC ROBIN
 	}
 	return (0);
 }
@@ -96,23 +105,3 @@ int	export_insert(t_var *var, char *name, char *content)
 	}
 	return (0);
 }
-// int export_find_equal(t_var *var)
-// {
-// 	int	i;
-// 	int	equal;
-
-// 	i = 0;
-// 	equal = 0;
-// 	while (var->cmd[i])
-// 	{
-// 		if (var->cmd[i] == '=')
-// 		{
-// 			equal = 1;
-// 			break ;
-// 		}
-// 		name[i] = var->cmd[i];
-// 		i++;
-// 	}
-// 	if (equal == 0)
-// 		return (- 1);
-// }
