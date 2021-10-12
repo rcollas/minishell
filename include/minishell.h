@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/12 11:17:40 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:55:56 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,11 @@ int		cmd_export_alone(t_var *var, char *name, int equal);
 int		export_reassigned_check(t_var *var, char *name, char *content);
 int		export_insert(t_var *var, char *name, char *content);
 int		ft_unset(t_var *var);
+int		ft_cd(t_var *var);
+int		print_echo(t_var *var);
+void	free_list(t_var *var); // a virer
+char	*ft_envar_swap_1(t_var *var, char *str);
+void	ft_envar_swap_2(t_var *var, char *str, char *str2);
+int		errors_chdir_handling(int dir);
 
 #endif

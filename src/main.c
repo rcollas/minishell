@@ -6,17 +6,17 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/11 17:04:42 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:53:49 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(t_var *var)
-{
-	(void)var;
-	return (0);
-}
+// int	ft_cd(t_var *var)
+// {
+// 	(void)var;
+// 	return (0);
+// }
 
 // int	ft_pwd(t_var *var)
 // {
@@ -118,6 +118,7 @@ int	main(int ac, char **av, char **env)
 		ret = is_builtin(var->cmd, builtin);
 		if (ret >= 0)
 			builtin[ret].func(var);
+		free_list(var);
 	}
 	return (0);
 }
