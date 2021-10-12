@@ -6,7 +6,11 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:53:53 by rcollas           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/10/12 11:36:30 by vbachele         ###   ########.fr       */
+=======
+/*   Updated: 2021/10/12 11:54:22 by vbachele         ###   ########.fr       */
+>>>>>>> ccd53bc9a6febf5338715bb1bd146ab3ac57a6c2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +80,19 @@ char		*ft_strtrim(const char *s1, const char *set);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
+<<<<<<< HEAD
 char		*ft_envar_find_content(t_envar *tmp, char *str);
+=======
+>>>>>>> ccd53bc9a6febf5338715bb1bd146ab3ac57a6c2
 int			list_insert(t_list **list, t_list *new, int pos);
 int			ft_envarsize(t_envar *envar);
 int			ft_envar_position(t_envar *envar, char *str);
 int			envar_insert(t_envar**envar, t_envar *new, int pos);
 int			list_remove(t_list **list, int pos);
 int			envar_remove(t_envar **envar, int pos);
+<<<<<<< HEAD
+=======
+char		*ft_envar_find_content(t_envar *tmp, char *str);
+>>>>>>> ccd53bc9a6febf5338715bb1bd146ab3ac57a6c2
 
 #endif

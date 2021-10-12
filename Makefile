@@ -10,7 +10,7 @@ SRC_FILES	=	src/main.c \
 			src/ft_export.c \
 			src/ft_export_utils.c \
 			src/ft_unset.c \
-
+			src/ft_cd.c \
 
 LIBFT_PATH	=	libft/
 

@@ -44,11 +44,18 @@ SRCS		= ft_memset.c\
 			  ft_envar_new.c\
 			  ft_envaradd_back.c\
 			  ft_envarlast.c\
+<<<<<<< HEAD
 			  ft_envar_find_content.c \
+=======
+>>>>>>> ccd53bc9a6febf5338715bb1bd146ab3ac57a6c2
 			  ft_envarsize.c \
 			  list_insert.c \
 			  ft_envar_position.c \
 			  list_remove.c \
+<<<<<<< HEAD
+=======
+			  ft_envar_find_content.c \
+>>>>>>> ccd53bc9a6febf5338715bb1bd146ab3ac57a6c2
 
 OBJS		= $(SRCS:.c=.o)
 
