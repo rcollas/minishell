@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:53:53 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/11 17:04:03 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:18:30 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_envar{
 	char			*content;
 	struct s_envar	*next;
 }		t_envar;
+
 
 int			ft_atoi(const char *str);
 void		ft_bzero(void *s, size_t n);

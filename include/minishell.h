@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/11 17:48:58 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:17:40 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	get_env_var(t_var *var, struct s_envar **envar);
 int		ft_pwd(t_var *var);
 int		ft_exit(t_var *var);
 int		ft_export(t_var *var);
-int		cmd_not_alpha(t_var *var);
+int		cmd_export_alone(t_var *var, char *name, int equal);
 int		export_reassigned_check(t_var *var, char *name, char *content);
 int		export_insert(t_var *var, char *name, char *content);
 int		ft_unset(t_var *var);

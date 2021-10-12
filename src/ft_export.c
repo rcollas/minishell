@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 10:27:30 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/12 10:44:27 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:19:17 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	ft_export(t_var *var)
 		content[j] = var->cmd[i];
 		j++;
 	}
-	i
 	if (equal == 0)
 		cmd_export_alone(var, name, equal);
 	if (export_reassigned_check(var, name, content) == -1 || equal == 0)
@@ -56,6 +55,8 @@ int	cmd_export_alone(t_var *var, char *name, int equal)
 	t_envar *tmp;
 	
 	tmp = var->envar;
+	(void) name;
+	(void) equal;
 	if (!ft_isalpha(var->cmd[0]))
 	{
 		while (tmp)
