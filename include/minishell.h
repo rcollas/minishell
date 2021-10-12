@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:47 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 14:46:29 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:35:53 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ typedef struct s_builtin{
 	int		(*func)(t_var *);
 }		t_builtin;
 
-// typedef struct s_cd{
-// 	struct	s_list	*cd_list;
-// 	char			*string_cd;
-// } t_cd;
-
 int		is_between_double_quotes(t_var *var, int i);
 int		is_between_simple_quotes(t_var *var, int i);
 int		check_unmatched_quotes(t_var *var);
@@ -65,5 +60,12 @@ void	get_env_var(t_var *var, struct s_envar **envar);
 int		ft_excve(t_var *var, char **argv);
 char	*get_path(t_var *var, char **path_fromenvp, char **argv);
 void	execve_error(t_var *var, char *path_final);
+int		ft_pwd(t_var *var);
+int		ft_exit(t_var *var);
+int		ft_export(t_var *var);
+int		cmd_export_alone(t_var *var, char *name, int equal);
+int		export_reassigned_check(t_var *var, char *name, char *content);
+int		export_insert(t_var *var, char *name, char *content);
+int		ft_unset(t_var *var);
 
 #endif

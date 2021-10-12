@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envar_position.c                                :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 14:52:40 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/12 11:36:09 by vbachele         ###   ########.fr       */
+/*   Created: 2021/10/05 10:57:38 by vbachele          #+#    #+#             */
+/*   Updated: 2021/10/06 02:04:43 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../include/minishell.h" //remplacer par le vrai path
 
-int	ft_envar_position(t_envar *envar, char *str)
+int	ft_exit(t_var *var)
 {
-	t_envar	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = envar;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, str))
-		{
-			i++;
-			return (i);
-		}
-		i++;
-		tmp = tmp->next;
-	}
+	//Rajouter ce qu'on doit free ailleurs
+	(void) var;
+	exit (EXIT_SUCCESS);
 	return (0);
 }

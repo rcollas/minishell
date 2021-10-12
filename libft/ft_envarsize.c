@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envar_position.c                                :+:      :+:    :+:   */
+/*   ft_envarsize.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 14:52:40 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/12 11:36:09 by vbachele         ###   ########.fr       */
+/*   Created: 2021/10/08 15:22:24 by vbachele          #+#    #+#             */
+/*   Updated: 2021/10/08 15:22:29 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_envar_position(t_envar *envar, char *str)
+int	ft_envarsize(t_envar *envar)
 {
-	t_envar	*tmp;
-	int		i;
+	int	i;
 
 	i = 0;
-	tmp = envar;
-	while (tmp)
+	while (envar)
 	{
-		if (ft_strcmp(tmp->name, str))
-		{
-			i++;
-			return (i);
-		}
+		envar = envar->next;
 		i++;
-		tmp = tmp->next;
 	}
-	return (0);
+	return (i);
 }

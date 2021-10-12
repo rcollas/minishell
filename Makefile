@@ -5,6 +5,12 @@ SRC_FILES	=	src/main.c \
 			src/ft_echo_utils.c \
 			src/get_envar.c \
 			src/ft_excve.c \
+			src/ft_pwd.c \
+			src/ft_exit.c \
+			src/ft_export.c \
+			src/ft_export_utils.c \
+			src/ft_unset.c \
+
 
 LIBFT_PATH	=	libft/
 

@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envar_position.c                                :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 14:52:40 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/12 11:36:09 by vbachele         ###   ########.fr       */
+/*   Created: 2021/10/04 17:29:54 by vbachele          #+#    #+#             */
+/*   Updated: 2021/10/11 17:41:35 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_envar_position(t_envar *envar, char *str)
+int	ft_unset(t_var *var)
 {
-	t_envar	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = envar;
+	t_envar *tmp;
+	int pos;
+	
+	pos = 0;
+	tmp = var->envar;
+	var->cmd = &(var->cmd[6]);
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->name, str))
+		if (ft_strcmp(tmp->name, var->cmd) == 1)
 		{
-			i++;
-			return (i);
+			pos = ft_envar_position(var->envar, tmp->name);
+			envar_remove(&var->envar, pos);
 		}
-		i++;
 		tmp = tmp->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 17:23:03 by rcollas           #+#    #+#             */
-/*   Updated: 2021/10/08 14:47:52 by vbachele         ###   ########.fr       */
+/*   Updated: 2021/10/12 11:38:52 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,29 @@ int	ft_cd(t_var *var)
 	return (0);
 }
 
-int	ft_pwd(t_var *var)
-{
-	(void)var;
-	return (0);
-}
+// int	ft_pwd(t_var *var)
+// {
+// 	(void)var;
+// 	return (0);
+// }
 
-int	ft_export(t_var *var)
-{
-	(void)var;
-	return (0);
-}
+// int	ft_export(t_var *var)
+// {
+// 	(void)var;
+// 	return (0);
+// }
 
-int	ft_unset(t_var *var)
-{
-	(void)var;
-	return (0);
-}
+// int	ft_unset(t_var *var)
+// {
+// 	(void)var;
+// 	return (0);
+// }
 
-int	ft_exit(t_var *var)
-{
-	(void)var;
-	return (0);
-}
+// int	ft_exit(t_var *var)
+// {
+// 	(void)var;
+// 	return (0);
+// }
 
 int	ft_env(t_var *var)
 {
@@ -124,7 +124,7 @@ int	main(int ac, char **av, char **env)
 		ret = is_builtin(var->cmd, builtin);
 		if (ret >= 0)
 			builtin[ret].func(var);
-		free_list(var);
+		// free_list(var);
 	}
 	return (0);
 }

@@ -1,33 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_envar_position.c                                :+:      :+:    :+:   */
+/*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbachele <vbachele@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/07 14:52:40 by vbachele          #+#    #+#             */
-/*   Updated: 2021/10/12 11:36:09 by vbachele         ###   ########.fr       */
+/*   Created: 2021/10/10 15:44:56 by vbachele          #+#    #+#             */
+/*   Updated: 2021/10/10 15:45:18 by vbachele         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int	ft_envar_position(t_envar *envar, char *str)
-{
-	t_envar	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = envar;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, str))
-		{
-			i++;
-			return (i);
-		}
-		i++;
-		tmp = tmp->next;
-	}
-	return (0);
-}
+#include "minishell.h"
